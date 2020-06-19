@@ -5,7 +5,7 @@ include_once 'vendor/autoload.php';
 use MorningCoffee\Coffee;
 
 $my_coffee = new Coffee();
-
+// FIXME: Should be coming from argv
 $my_template_file = "./test_file.html";
 // Define a key/value object as template context
 $context = [
