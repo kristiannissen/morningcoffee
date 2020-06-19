@@ -27,13 +27,18 @@ class Coffee {
 
         if (count($context) > 0)
         {
-            $keys = array_map(function($key) {
-                return $key;
-            }, array_keys($context));
-
-            var_dump($keys);
-
-            // $this->file_content = str_replace();
+            $key_val = [];
+            foreach ($context as $key => $val)
+            {
+                $key_val["{".$key."}"] = $val;
+            }
+            $markup = str_replace(
+                array_keys($key_val),
+                array_values($key_val),
+                $this->file_content
+            );
+            
+            return $markup;
         }
     }
 }
