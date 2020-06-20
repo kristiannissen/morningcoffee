@@ -10,7 +10,10 @@ $my_template_file = $argv[1];
 // Define a key/value object as template context
 $context = [
     'name' => 'Kitty',
-    'greeting' => 'Hello'
+    'greeting' => 'Hello',
+    'kitty' => function() {
+        return 'Whazuup';
+    }
 ];
 
 echo $my_coffee->render($my_template_file, $context);

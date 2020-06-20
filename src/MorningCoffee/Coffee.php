@@ -23,7 +23,6 @@ class Coffee {
     public function render(string $file_path, array $context = [])
     {
         $this->file_path = $file_path;
-        $markup = "";
 
         if (!file_exists($file_path))
             throw new CoffeeException("The file does not exist");
@@ -50,7 +49,17 @@ class Coffee {
         $key_val = [];
         foreach ($context as $key => $val)
         {
-            $key_val["{".$key."}"] = $val;
+            $_key = "{". $key ."}";
+
+            switch (gettype($context[$key]))
+            {
+                case 'string':
+                    $key_val[$_key] = $val;
+                    break;
+                case 'object':
+                    $key_val[$_key] = call_user_func($val);
+                    break;
+            }
         }
         $markup = str_replace(
             array_keys($key_val),
