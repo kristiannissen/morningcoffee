@@ -13,7 +13,7 @@ $context = [
     'greeting' => 'Hello',
     'kitty' => function() {
         return 'Whazuup';
-    }
+    },
 ];
 
 echo $my_coffee->render($my_template_file, $context);
