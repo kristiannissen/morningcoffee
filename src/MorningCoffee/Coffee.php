@@ -1,6 +1,8 @@
 <?php
 
 namespace MorningCoffee;
+
+use MorningCoffee\CoffeeException;
 /**
  * class Coffee
  */
@@ -24,20 +26,12 @@ class Coffee {
         $markup = "";
 
         if (!file_exists($file_path))
-            //TODO: Should throw an exception instead
-            return trigger_error(
-                "The file $file_path does not exist",
-                E_USER_ERROR
-            );
+            throw new CoffeeException("The file does not exist");
 
         $this->file_content = file_get_contents($this->file_path);
 
         if ($this->file_content == "")
-            // TODO: Should throw an exception instead
-            return trigger_error(
-                "The file has no content",
-                E_USER_ERROR
-            );
+            throw new CoffeeException("The file is empty");
 
         if (count($context) > 0)
         {
@@ -47,6 +41,10 @@ class Coffee {
         return $this->file_content;
     }
 
+    /*
+     * @param array $context
+     * @return string
+     */
     public function parseContextArray(array $context)
     {
         $key_val = [];
