@@ -28,3 +28,19 @@ $context = [
 ];
 ```
 I HTML koden vil {name} blive erstattet af 'Kitty' osv.
+
+### Bash som template sprog
+Morningtrains kode udfordring kræver ikke at der er et template sprog, men
+hvorfor ikke. Efter at have undersøgt forskellige template syntaks, fik jeg den
+idé, at bash ville være ideelt som template sprog :D
+
+Så ideen er, at det er muligt at afvikle en bash-lignende syntaks i HTML koden
+```
+if [[ 1 + 1 = 2]] then
+    echo "1 + 1 = 2"
+elif [[ 1 + 1 = 3]] then
+    echo "1 + 1 = 3"
+fi
+```
+
+
