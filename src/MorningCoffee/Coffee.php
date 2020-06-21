@@ -51,7 +51,7 @@ class Coffee {
         {
             $_key = "{". $key ."}";
 
-            switch (gettype($context[$key]))
+            switch (gettype($val))
             {
                 case 'string':
                     $key_val[$_key] = $val;
