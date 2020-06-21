@@ -3,17 +3,20 @@
 namespace MorningCoffee;
 
 use MorningCoffee\CoffeeException;
+use MorningCoffee\ParserInterface;
 /**
  * class Coffee
  */
 class Coffee {
     protected $file_path;
     protected $file_content;
+    protected $parser;
 
-    public function __construct()
+    public function __construct(ParserInterface $parser)
     {
         $this->file_path = "";
         $this->file_content = "";
+        $this->parser = $parser;
     }
     /*
      * @param string $file_path

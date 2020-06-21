@@ -42,5 +42,6 @@ elif [[ 1 + 1 = 3]] then
     echo "1 + 1 = 3"
 fi
 ```
-
-
+For at teste ideen lavede jeg [denne
+gist](https://gist.github.com/kristiannissen/a5451fe6006f304e9e75446dbb749ed7) med regulære udtryk til at parse koden
+med.
