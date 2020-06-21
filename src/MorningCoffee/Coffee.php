@@ -13,12 +13,16 @@ class Coffee
     protected $file_content;
     protected $parser;
 
+    /**
+     * @param ParserInterface $parser
+     */
     public function __construct(ParserInterface $parser)
     {
         $this->file_path = "";
         $this->file_content = "";
         $this->parser = $parser;
     }
+
     /*
      * @param string $file_path
      * @param array $context
@@ -56,13 +60,16 @@ class Coffee
         $key_val = [];
         foreach ($context as $key => $val) {
             $_key = "{" . $key . "}";
-
+            // TODO: Unsupported type should throw an exception
             switch (gettype($val)) {
                 case 'string':
                     $key_val[$_key] = $val;
                     break;
                 case 'object':
                     $key_val[$_key] = call_user_func($val);
+                    break;
+                default:
+                    throw new CoffeeException("Unsupported value");
                     break;
             }
         }
