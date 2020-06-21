@@ -18,3 +18,4 @@ $context = [
 ];
 
 echo $my_coffee->render($my_template_file, $context);
+
