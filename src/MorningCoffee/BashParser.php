@@ -8,7 +8,7 @@ class BashParser implements ParserInterface
 {
     private $content;
     private $code;
-    
+
     public function __construct()
     {
         $this->content = "";
@@ -31,11 +31,7 @@ class BashParser implements ParserInterface
             '} ]', // fi
         ];
 
-        $this->code = preg_replace(
-            $patterns,
-            $replacements,
-            $this->content
-        );
+        $this->code = preg_replace($patterns, $replacements, $this->content);
 
         var_dump($this->code);
 

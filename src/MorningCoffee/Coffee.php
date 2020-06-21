@@ -7,7 +7,8 @@ use MorningCoffee\ParserInterface;
 /**
  * class Coffee
  */
-class Coffee {
+class Coffee
+{
     protected $file_path;
     protected $file_content;
     protected $parser;
@@ -27,17 +28,18 @@ class Coffee {
     {
         $this->file_path = $file_path;
 
-        if (!file_exists($file_path))
+        if (!file_exists($file_path)) {
             throw new CoffeeException("The file does not exist");
+        }
 
         $this->file_content = file_get_contents($this->file_path);
 
-        if ($this->file_content == "")
+        if ($this->file_content == "") {
             throw new CoffeeException("The file is empty");
+        }
 
-        if (count($context) > 0)
-        {
-           $this->file_content = $this->parseContextArray($context); 
+        if (count($context) > 0) {
+            $this->file_content = $this->parseContextArray($context);
         }
 
         $this->file_content = $this->parser->parse($this->file_content);
@@ -52,12 +54,10 @@ class Coffee {
     public function parseContextArray(array $context)
     {
         $key_val = [];
-        foreach ($context as $key => $val)
-        {
-            $_key = "{". $key ."}";
+        foreach ($context as $key => $val) {
+            $_key = "{" . $key . "}";
 
-            switch (gettype($val))
-            {
+            switch (gettype($val)) {
                 case 'string':
                     $key_val[$_key] = $val;
                     break;

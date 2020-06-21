@@ -2,7 +2,8 @@
 
 namespace MorningCoffee;
 
-class CoffeeException extends \Exception {
+class CoffeeException extends \Exception
+{
     protected $details;
 
     public function __construct($details)
@@ -13,6 +14,6 @@ class CoffeeException extends \Exception {
 
     public function __toString()
     {
-        return "No more coffee!!!". $this->details;
+        return "No more coffee!!!" . $this->details;
     }
 }
