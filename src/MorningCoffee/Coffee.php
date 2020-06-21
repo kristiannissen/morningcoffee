@@ -40,6 +40,8 @@ class Coffee {
            $this->file_content = $this->parseContextArray($context); 
         }
 
+        $this->file_content = $this->parser->parse($this->file_content);
+
         return $this->file_content;
     }
 
