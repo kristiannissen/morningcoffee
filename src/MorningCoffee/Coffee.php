@@ -10,7 +10,7 @@ use MorningCoffee\ParserInterface;
 class Coffee
 {
     protected $file_path;
-    protected $file_content;
+    protected $file_contents;
     protected $parser;
 
     /**
@@ -36,20 +36,19 @@ class Coffee
             throw new CoffeeException("The file does not exist");
         }
 
-        $this->file_content = file_get_contents($this->file_path);
+        $this->file_contents = file_get_contents($this->file_path);
 
-        if ($this->file_content == "") {
+        if ($this->file_contents == "") {
             throw new CoffeeException("The file is empty");
         }
 
         if (count($context) > 0) {
-            $this->file_content = $this->parseContextArray($context);
+            $this->file_contents = $this->parseContextArray($context);
         }
 
-        // $this->file_content = $this->parser->parse($this->file_content);
-        $this->file_content = $this->runParser();
+        $this->file_contents = $this->runParser();
 
-        return $this->file_content;
+        return $this->file_contents;
     }
 
     /*
@@ -57,11 +56,8 @@ class Coffee
      */
     public function runParser()
     {
-        ob_start();
-        eval("?>". $this->parser->parse($this->file_content) ."<?");
-        $tmp_string = ob_get_contents();
-        ob_end_flush();
-        return $tmp_string;
+        $contents = $this->parser->parse($this->file_contents);
+        return $contents;
     }
 
     /*
@@ -89,7 +85,7 @@ class Coffee
         $markup = str_replace(
             array_keys($key_val),
             array_values($key_val),
-            $this->file_content
+            $this->file_contents
         );
 
         return $markup;

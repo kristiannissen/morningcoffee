@@ -18,7 +18,7 @@ class BashParser implements ParserInterface
         '/(done)/m',
     ];
     public static $replacements = [
-        '<!php${1} (${2}): ?>', // if
+        '<?php ${1} (${2}): ?>', // if
         '<?php elseif (${2}): ?>', // elif
         '<?php ${1} ${2}; ?>', // echo
         'endif ?>', // fi
@@ -35,12 +35,10 @@ class BashParser implements ParserInterface
 
     public function parse(string $content)
     {
-        $this->content = $content;
-
-        $this->content = str_replace(
+        $this->content = preg_replace(
             self::$patterns,
             self::$replacements,
-            $this->content
+            $content
         );
 
         return $this->content;
