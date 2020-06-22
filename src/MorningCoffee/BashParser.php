@@ -22,24 +22,67 @@ class BashParser implements ParserInterface
       $line = strtok($content, PHP_EOL);
 
       while ($line !== false) {
-        if (Str::contains($line, '/([^el]if)\s?\[{1,2}/')) {
+        if (Str::contains($line, '/([^el]if)\s?\[{2}/')) {
           // if [[ 1 + 1 = 2]] then
           $code = str_replace(
-            ["[[", "]]", "=", "then"],
+            ["[[", "]]", "=", " then"],
             ["(", ")", "==", ":"],
             trim($line)
           );
-          $match = Str::matches($line, '/([^el]if)\s?\[{1,2}/');
+          $match = Str::matches($line, '/([^el]if)\s?\[{2}/');
           $content = substr_replace(
             $content,
-            $code,
+            "<?php ". $code ." ?>",
             stripos($content, $match),
             strlen(trim($line))
           );
         }
+
+        if (Str::contains($line, "/(elif)\s?\[{2}/")) {
+          // elif [[ 1 + 1 = 3]] then
+          $code = str_replace(
+            ["elif", "[[", "]]", " then"],
+            ["elseif", "(", ")", ":"],
+            trim($line)
+          );
+          $match = Str::matches($line, '/(elif)\s?\[{2}(.*)\]{2}\s?(then)/');
+          $content = substr_replace(
+            $content,
+            "<?php ". $code ." ?>",
+            stripos($content, $match),
+            strlen(trim($line))
+          );
+        }
+
+        if (Str::contains($line, '/(fi)/')) {
+          // fi
+          $match = Str::matches($line, '/(fi)/');
+          $content = substr_replace(
+            $content,
+            "<? endif ?>",
+            stripos($content, $match),
+            strlen(trim($line))
+          );
+        }
+
+        if (Str::contains($line, '/(echo)/')) {
+          // echo "1 + 1 is 2"
+          $match = Str::matches($line, '/(echo)\s=?(.*)/');
+          $content = substr_replace(
+            $content,
+            "<?php ". $match ." ?>",
+            stripos($content, $match),
+            strlen(trim($line))
+          );
+        }
+
         $line = strtok(PHP_EOL);
       }
 
       return $content;
+    }
+
+    public static function parseIf($content) {
+      
     }
 }
