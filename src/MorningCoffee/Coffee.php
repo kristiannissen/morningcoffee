@@ -56,13 +56,13 @@ class Coffee
      */
     public function runParser()
     {
-      $contents = $this->parser->parse($this->file_contents);
-      ob_start();
-      eval("?>". $contents ."<?");
-      $code = ob_get_contents();
-      ob_end_flush();
+        $contents = $this->parser->parse($this->file_contents);
+        ob_start();
+        eval("?>" . $contents . "<?");
+        $code = ob_get_contents();
+        ob_end_flush();
 
-      return $code;
+        return $code;
     }
 
     /*

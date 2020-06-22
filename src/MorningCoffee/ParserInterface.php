@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * @ParserInterface
+ */
 namespace MorningCoffee;
 
 interface ParserInterface

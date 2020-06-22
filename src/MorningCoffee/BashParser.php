@@ -1,12 +1,16 @@
 <?php
-
+/**
+ * BashParser class
+ */
 namespace MorningCoffee;
 
 use MorningCoffee\ParserInterface;
 
 class BashParser implements ParserInterface
 {
+    // @property string $content
     private $content;
+    // @property array $patters
     public static $patterns = [
         '/([^el]if)\s\[\[(.*)\]\]\s(then)$/m',
         '/(elif)\s\[\[(.*)\]\]\s(then)$/m',
@@ -17,6 +21,7 @@ class BashParser implements ParserInterface
         '/(for)\s(.*)\sas\s(.*)\s(do)/m',
         '/(done)/m',
     ];
+    // @property array $replacements
     public static $replacements = [
         '<?php ${1} (${2}): ?>', // if
         '<?php elseif (${2}): ?>', // elif
@@ -33,8 +38,14 @@ class BashParser implements ParserInterface
         $this->content = "";
     }
 
+    /**
+     * @param string $content
+     */
     public function parse(string $content)
     {
+        /**
+         * Replace regex patterns with proper PHP code
+         */
         $this->content = preg_replace(
             self::$patterns,
             self::$replacements,
@@ -43,17 +54,16 @@ class BashParser implements ParserInterface
 
         // split Fruits=['Apple' 'Banana' 'Orange'] into commas sep string
         preg_match_all('/\[(.*)\]/m', $this->content, $matches);
-        if (count($matches))
-        {
-          for ($i = 0; $i < count($matches); $i++) {
-            for ($j = 0; $j < count($matches[$i]); $j++) {
-              $this->content = str_replace(
-                $matches[$i][$j],
-                join(",", explode(" ", $matches[$i][$j])),
-                $this->content
-              );
+        if (count($matches)) {
+            for ($i = 0; $i < count($matches); $i++) {
+                for ($j = 0; $j < count($matches[$i]); $j++) {
+                    $this->content = str_replace(
+                        $matches[$i][$j],
+                        join(",", explode(" ", $matches[$i][$j])),
+                        $this->content
+                    );
+                }
             }
-          }
         }
 
         return $this->content;

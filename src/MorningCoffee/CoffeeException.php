@@ -1,5 +1,7 @@
 <?php
-
+/**
+ * class CoffeeException
+ */
 namespace MorningCoffee;
 
 class CoffeeException extends \Exception
