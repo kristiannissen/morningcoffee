@@ -61,7 +61,7 @@ class Coffee
         $tmp_file = tmpfile();
         $tmp_file_meta = (object) stream_get_meta_data($tmp_file);
         fwrite($tmp_file, $contents);
-        $tmp_include = include($tmp_file_meta->uri);
+        $tmp_include = include $tmp_file_meta->uri;
         fclose($tmp_file);
 
         return $tmp_include;
