@@ -40,9 +40,22 @@ class Coffee {
            $this->file_content = $this->parseContextArray($context); 
         }
 
-        $this->file_content = $this->parser->parse($this->file_content);
+        // $this->file_content = $this->parser->parse($this->file_content);
+        $this->file_content = $this->runParser();
 
         return $this->file_content;
+    }
+
+    /*
+     * @return string
+     */
+    public function runParser()
+    {
+        ob_start();
+        eval("?>". $this->parser->parse($this->file_content) ."<?");
+        $tmp_string = ob_get_contents();
+        ob_end_flush();
+        return $tmp_string;
     }
 
     /*

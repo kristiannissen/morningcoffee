@@ -19,10 +19,10 @@ class BashParser implements ParserInterface
         '/(done)/m',
     ];
     public static $replacements = [
-        '${1} (${2}) {', // if
-        '} elseif (${2}) {', // elif
-        '${1} ${2};', // echo
-        '}', // fi
+        '<?php${1} (${2}): ?>', // if
+        '<?php elseif (${2}): ?>', // elif
+        '<?php ${1} ${2}; ?>', // echo
+        '<?php endif; ?>', // fi
         '==', // =
         '$${1}=[${2}];', // Variables
         'foreach ($${2} as $${3}) {', // for loop
