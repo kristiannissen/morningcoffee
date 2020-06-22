@@ -46,9 +46,6 @@ Eksempel på HTML fil
 > Consider using regular expressions
 
 ### Løsningsforslag
-Eksempel på HTML [kan ses
-her](https://github.com/kristiannissen/morningcoffee/blob/master/test_file.html)
-
 Key/Value array hvor key erstattes af value i HTML koden
 ```
 $context = [
@@ -74,6 +71,4 @@ elif [[ 1 + 1 = 3]] then
     echo "1 + 1 = 3"
 fi
 ```
-For at teste ideen lavede jeg [denne
-gist](https://gist.github.com/kristiannissen/a5451fe6006f304e9e75446dbb749ed7) med regulære udtryk til at parse koden
-med.
+Det har været en sjov udfordring og i al beskedenhed, synes jeg mit løsningsforslag er ganske godt. Jeg er ikke vil med brugen af eval() funktionen, en bedre løsning ville være at skrive indholdet af HTML filen som en PHP fil og gemme den som tmp fil og i stedet [inkludere den her i stedet](https://github.com/kristiannissen/morningcoffee/blob/fb3a70a2096609f604c305967866d7daf7532143/src/MorningCoffee/Coffee.php#L61). Eval() is Evil()...
