@@ -43,6 +43,13 @@ class BashParser implements ParserInterface
      */
     public function parse(string $content)
     {
+      /**
+       * Normalise whitespace
+       * FIXME: What about <pre>?
+       */
+      $this->content = trim(preg_replace(
+        '/\t+/m', ' ', $content
+      ));
         /**
          * Replace regex patterns with proper PHP code
          */
@@ -52,7 +59,7 @@ class BashParser implements ParserInterface
             $content
         );
 
-        preg_match_all('/\[(.*)\]\s?$/m', $this->content, $matches);
+        preg_match_all('/\s?\[(.*)\]/m', $this->content, $matches);
         if (count($matches)) {
             for ($i = 0; $i < count($matches); $i++) {
                 for ($j = 0; $j < count($matches[$i]); $j++) {
