@@ -6,8 +6,9 @@ use MorningCoffee\Coffee;
 use MorningCoffee\BashParser;
 
 $my_coffee = new Coffee(new BashParser);
-// FIXME: Should be coming from argv
+
 $my_template_file = $argv[1];
+
 // Define a key/value object as template context
 $context = [
     'name' => 'Kitty',

@@ -73,7 +73,7 @@ class Coffee
         $key_val = [];
         foreach ($context as $key => $val) {
             $_key = "{" . $key . "}";
-            // TODO: Unsupported type should throw an exception
+
             switch (gettype($val)) {
                 case 'string':
                     $key_val[$_key] = $val;
