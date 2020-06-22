@@ -12,10 +12,10 @@ class BashParser implements ParserInterface
     private $content;
     // @property array $patters
     public static $patterns = [
-        '/([^el]if)\s\[\[(.*)\]\]\s(then)$/m',
-        '/(elif)\s\[\[(.*)\]\]\s(then)$/m',
+        '/([^el]if)\s?\[\[\s?(.*)\s?\]\]\s?(then)/m',
+        '/(elif)\s?\[\[\s?(.*)\s?\]\]\s?(then)/m',
         '/(echo)\s("?.*"?)/m',
-        '/(fi)$/m',
+        '/(fi)/m',
         '/\s=\s/m',
         '/([A-Z]{1}\w+)\=\((.*)\)/m',
         '/(for)\s(.*)\sas\s(.*)\s(do)/m',
@@ -52,8 +52,7 @@ class BashParser implements ParserInterface
             $content
         );
 
-        // split Fruits=['Apple' 'Banana' 'Orange'] into commas sep string
-        preg_match_all('/\[(.*)\]/m', $this->content, $matches);
+        preg_match_all('/\[(.*)\]\s?$/m', $this->content, $matches);
         if (count($matches)) {
             for ($i = 0; $i < count($matches); $i++) {
                 for ($j = 0; $j < count($matches[$i]); $j++) {

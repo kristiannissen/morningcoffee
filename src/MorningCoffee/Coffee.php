@@ -56,7 +56,8 @@ class Coffee
      */
     public function runParser()
     {
-        $contents = $this->parser->parse($this->file_contents);
+      $contents = $this->parser->parse($this->file_contents);
+      print_r($contents);
 
         $tmp_file = tmpfile();
         $tmp_file_meta = (object) stream_get_meta_data($tmp_file);
