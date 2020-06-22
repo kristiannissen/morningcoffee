@@ -46,7 +46,7 @@ class Coffee
             $this->file_contents = $this->parseContextArray($context);
         }
 
-        $this->file_contents = $this->runParser();
+        $this->file_contents = $this->parseContent();
 
         return $this->file_contents;
     }
@@ -54,17 +54,17 @@ class Coffee
     /*
      * @return string
      */
-    public function runParser()
+    public function parseContent()
     {
         $contents = $this->parser->parse($this->file_contents);
-
+        /*
         $tmp_file = tmpfile();
         $tmp_file_meta = (object) stream_get_meta_data($tmp_file);
         fwrite($tmp_file, $contents);
         $tmp_include = include $tmp_file_meta->uri;
         fclose($tmp_file);
-
-        return $tmp_include;
+        */
+        return $contents;
     }
 
     /*

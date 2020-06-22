@@ -5,34 +5,10 @@
 namespace MorningCoffee;
 
 use MorningCoffee\ParserInterface;
+use MorningCoffee\Str;
 
 class BashParser implements ParserInterface
 {
-    // @property string $content
-    private $content;
-    // @property array $patters
-    public static $patterns = [
-        '/([^el]if)\s?\[\[\s?(.*)\s?\]\]\s?(then)/m',
-        '/(elif)\s?\[\[\s?(.*)\s?\]\]\s?(then)/m',
-        '/(echo)\s("?.*"?)/m',
-        '/(fi)/m',
-        '/\s=\s/m',
-        '/([A-Z]{1}\w+)\=\((.*)\)/m',
-        '/(for)\s(.*)\sas\s(.*)\s(do)/m',
-        '/(done)/m',
-    ];
-    // @property array $replacements
-    public static $replacements = [
-        '<?php ${1} (${2}): ?>', // if
-        '<?php elseif (${2}): ?>', // elif
-        '<?php ${1} ${2}; ?>', // echo
-        '<?php endif ?>', // fi
-        '==', // =
-        '<?php $${1}=[${2}] ?>', // Variables
-        '<?php foreach ($${2} as $${3}): ?>', // for loop
-        '<?php endforeach ?>', // done
-    ];
-
     public function __construct()
     {
         $this->content = "";
@@ -43,33 +19,27 @@ class BashParser implements ParserInterface
      */
     public function parse(string $content)
     {
-        /**
-         * Normalise whitespace
-         * FIXME: What about <pre>?
-         */
-        $this->content = trim(preg_replace('/\t+/m', ' ', $content));
-        /**
-         * Replace regex patterns with proper PHP code
-         */
-        $this->content = preg_replace(
-            self::$patterns,
-            self::$replacements,
-            $content
-        );
+      $line = strtok($content, PHP_EOL);
 
-        preg_match_all('/\s?\[(.*)\]/m', $this->content, $matches);
-        if (count($matches)) {
-            for ($i = 0; $i < count($matches); $i++) {
-                for ($j = 0; $j < count($matches[$i]); $j++) {
-                    $this->content = str_replace(
-                        $matches[$i][$j],
-                        join(",", explode(" ", $matches[$i][$j])),
-                        $this->content
-                    );
-                }
-            }
+      while ($line !== false) {
+        if (Str::contains($line, '/([^el]if)\s?\[{1,2}/')) {
+          // if [[ 1 + 1 = 2]] then
+          $code = str_replace(
+            ["[[", "]]", "=", "then"],
+            ["(", ")", "==", ":"],
+            trim($line)
+          );
+          $match = Str::matches($line, '/([^el]if)\s?\[{1,2}/');
+          $content = substr_replace(
+            $content,
+            $code,
+            stripos($content, $match),
+            strlen(trim($line))
+          );
         }
+        $line = strtok(PHP_EOL);
+      }
 
-        return $this->content;
+      return $content;
     }
 }
