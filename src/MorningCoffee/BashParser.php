@@ -43,13 +43,11 @@ class BashParser implements ParserInterface
      */
     public function parse(string $content)
     {
-      /**
-       * Normalise whitespace
-       * FIXME: What about <pre>?
-       */
-      $this->content = trim(preg_replace(
-        '/\t+/m', ' ', $content
-      ));
+        /**
+         * Normalise whitespace
+         * FIXME: What about <pre>?
+         */
+        $this->content = trim(preg_replace('/\t+/m', ' ', $content));
         /**
          * Replace regex patterns with proper PHP code
          */
