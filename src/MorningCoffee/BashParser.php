@@ -57,7 +57,7 @@ class BashParser implements ParserInterface
                 );
             }
 
-            if (Str::contains($line, '/(fi)/')) {
+            if (Str::is($line, 'fi')) {
                 // fi
                 $match = Str::matches($line, '/(fi)/');
                 $content = substr_replace(
