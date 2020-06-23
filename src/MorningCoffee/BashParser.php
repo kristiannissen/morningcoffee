@@ -70,7 +70,24 @@ class BashParser implements ParserInterface
           $match = Str::matches($line, '/(echo)\s=?(.*)/');
           $content = substr_replace(
             $content,
-            "<?php ". $match ." ?>",
+            "<?php ". trim($match) ." ?>",
+            stripos($content, $match),
+            strlen(trim($line))
+          );
+        }
+
+        if (Str::contains($line, '/([A-Z]{1}\w+)=(.*)$/')) {
+          // Variables
+          $match = Str::matches($line, '/([A-Z]{1}\w+)=(.*)$/');
+          preg_match('/\((.*)\)/', trim($match), $vars);
+          $vars_arr = str_replace(
+            $vars[1],
+            join(',', explode(' ', $vars[1])),
+            $match
+          );
+          $content = substr_replace(
+            $content,
+            "<?php $". trim($vars_arr) ." ?>",
             stripos($content, $match),
             strlen(trim($line))
           );
