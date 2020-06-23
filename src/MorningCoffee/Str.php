@@ -28,4 +28,8 @@ class Str {
     preg_match($reg, $str, $m);
     return trim($m[0]);
   }
+
+  public static function is($a, $b) : bool {
+    return trim($a) === trim($b);
+  }
 }

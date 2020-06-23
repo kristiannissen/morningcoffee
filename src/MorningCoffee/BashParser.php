@@ -87,8 +87,39 @@ class BashParser implements ParserInterface
           );
           $content = substr_replace(
             $content,
-            "<?php $". trim($vars_arr) ." ?>",
+            "<?php $". trim($vars_arr) ."; ?>",
             stripos($content, $match),
+            strlen(trim($line))
+          );
+        }
+
+        if (Str::contains($line, '/(for)\s([A-Z]\w+)\s(as)\s(\w+)\s(do)$/')) {
+          // for loop
+          preg_match(
+            '/(for)\s([A-Z]\w+)\s(as)\s(\w+)\s(do)$/',
+            trim($line),
+            $matches
+          );
+
+          $code = $matches[0];
+          $code = str_replace(
+            ["for", "do", $matches[2],  $matches[4]],
+            ["foreach (", ")", "$". $matches[2], "$". $matches[4]],
+            $code
+          );
+          $content = substr_replace(
+            $content,
+            "<?php ". trim($code) .": ?>",
+            stripos($content, $matches[0]),
+            strlen(trim($line))
+          );
+        }
+
+        if (Str::is($line, "done")) {
+          $content = substr_replace(
+            $content,
+            "<?php endforeach ?>",
+            stripos($content, "done"),
             strlen(trim($line))
           );
         }
