@@ -71,4 +71,4 @@ elif [[ 1 + 1 = 3]] then
     echo "1 + 1 = 3"
 fi
 ```
-Det har været en sjov udfordring og i al beskedenhed, synes jeg mit løsningsforslag er ganske godt. Jeg er ikke vild med brugen af eval() funktionen, en bedre løsning ville være at skrive indholdet af HTML filen som en PHP fil og gemme den som tmp fil og i stedet [inkludere den her i stedet](https://github.com/kristiannissen/morningcoffee/blob/fb3a70a2096609f604c305967866d7daf7532143/src/MorningCoffee/Coffee.php#L61). Eval() is Evil()...
+Jeg kunne ikke holde tanken ud, om at jeg havde brugt eval() til denne løsning, og heller ikke den store afhængighed af regulære udtryk... Så jeg skrev en stor del af løsningen om så jeg i stedet for at bruge regulære udtryk, indlæser [hver linje i HTML koden og håndterer den](https://github.com/kristiannissen/morningcoffee/blob/de5118ba7d6199621bb4b1f12a4112eff1b46c7a/src/MorningCoffee/BashParser.php#L24).
