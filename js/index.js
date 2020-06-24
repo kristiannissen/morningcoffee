@@ -8,4 +8,4 @@ import {readCSV} from "./CSVReader.js";
 // Read CLI arguments
 const argv = process.argv.slice(2);
 
-console.log(readCSV(argv));
+readCSV(argv).then(data => console.table(data));
