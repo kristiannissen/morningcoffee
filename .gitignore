@@ -2,3 +2,6 @@
 .DS_Store
 test_file.html
 *.html
+/node_modules
+package-lock.json
+*.csv
