@@ -72,3 +72,35 @@ elif [[ 1 + 1 = 3]] then
 fi
 ```
 Jeg kunne ikke holde tanken ud, om at jeg havde brugt eval() til denne løsning, og heller ikke den store afhængighed af regulære udtryk... Så jeg skrev en stor del af løsningen om så jeg i stedet for at bruge regulære udtryk, indlæser [hver linje i HTML koden og håndterer den](https://github.com/kristiannissen/morningcoffee/blob/de5118ba7d6199621bb4b1f12a4112eff1b46c7a/src/MorningCoffee/BashParser.php#L24).
+### JavaScript udfordring
+Med mere tid i overskud valgte jeg også at løse deres JavaScript udfordring
+
+> For the JS challenge, we will be testing your ability to work with node.js and JavaScript in general.
+> You are expected to use OOP and the latest language features, as well as demonstrating an understanding of scoping.
+
+Jeg fik så lavet løsningen inden jeg opdagede at det skulle være en OOP baseret løsning og ikke bare et modul der kan løse opgaven. Min første løsning var ellers ret spiffy, synes jeg selv
+```
+import {readFile} from 'fs';
+
+const readCSV = (args) => {
+    let filePath = args[0],
+        delimiter = args[1];
+  return new Promise((resolve, reject) => {
+    readFile(filePath, "utf8", (err, data) => {
+      if (err) return reject(err);
+      let lines = data.split(/\r?\n/);
+      let table = lines.map(line => {
+        return line.split(delimiter);
+      })
+      return resolve(table);
+    })
+  })
+};
+
+export {readCSV};
+```
+Jeg fandt ud af, at console har en table funktion, så jeg kunne nemt skrive al data ud som table i consollen :)
+```
+readCSV(argv).then(data => console.table(data));
+```
+Det hele er ret hurtigt at printe ud. Jeg testede med en fil med MANGE rækker i, og det gik pænt stærkt...
