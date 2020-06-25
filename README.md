@@ -123,3 +123,36 @@ class CSVReader {
 }
 ```
 Men smukt er det jo... så simpelt!
+### OOP løsning med scope
+Jeg skrev min objekt orienterede løsning om så den fik en construct() metode og en read() metode.
+```
+class CSVReader {
+  /**
+   * Represents a CSV Reader
+   * @constructor
+   * @param {string} filePath - The path to the CSV file
+   * @param {string} csvDelimiter - Either "," or ";" can be used
+   */
+  constructor(filePath, csvDelimiter) {
+    this.filePath = filePath;
+    this.csvDelimiter = csvDelimiter;
+  }
+  /**
+   * Reads the CSV file and returns the data set using the delimiter
+   * @return {promise} - Returns the data set using a promise
+   */
+  readFile() {
+    return new Promise((resolve, reject) => {
+      readFile(this.filePath, "utf8", (err, data) => {
+        if (err) return reject(err);
+        let lines = data.split(/\r?\n/);
+        let table = lines.map((line) => {
+          return line.split(this.csvDelimiter);
+        });
+        return resolve(table);
+      });
+    });
+  }
+}
+```
+Så er der vist  ikke mere arbejde i den udfordring :)
