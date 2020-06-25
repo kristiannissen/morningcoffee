@@ -10,4 +10,6 @@ const argv = process.argv.slice(2);
 let filePath = argv[0],
   csvDelimiter = argv[1] || ",";
 
-CSVReader.readFile(filePath, csvDelimiter).then((data) => console.table(data));
+let reader = new CSVReader(filePath, csvDelimiter);
+
+reader.readFile().then((data) => console.table(data));
