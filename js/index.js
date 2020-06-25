@@ -4,8 +4,10 @@
  * table showing the content of the file
  * @example node js/index.js file.csv ";"
  */
-import { readCSV } from "./CSVReader.js";
+import CSVReader from "./CSVReader.js";
 // Read CLI arguments
 const argv = process.argv.slice(2);
+let filePath = argv[0],
+  csvDelimiter = argv[1] || ",";
 
-readCSV(argv).then((data) => console.table(data));
+CSVReader.readFile(filePath, csvDelimiter).then((data) => console.table(data));
