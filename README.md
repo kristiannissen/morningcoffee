@@ -104,3 +104,22 @@ Jeg fandt ud af, at console har en table funktion, så jeg kunne nemt skrive al 
 readCSV(argv).then(data => console.table(data));
 ```
 Det hele er ret hurtigt at printe ud. Jeg testede med en fil med MANGE rækker i, og det gik pænt stærkt...
+
+Så blev det til en OOP baseret løsning i stedet, men min løsning opfylder ikke helt forventningerne idet jeg ikke viser jeg kan holde styr på **this** i JS.
+```
+class CSVReader {
+  static readFile(filePath, csvDelimiter) {
+    return new Promise((resolve, reject) => {
+      readFile(filePath, "utf8", (err, data) => {
+        if (err) return reject(err);
+        let lines = data.split(/\r?\n/);
+        let table = lines.map((line) => {
+          return line.split(csvDelimiter);
+        });
+        return resolve(table);
+      });
+    });
+  }
+}
+```
+Men smukt er det jo... så simpelt!
